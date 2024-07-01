@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="sign up .css">
+  </head>
+  <!-- Add the rest of the HTML code here -->
+  <form id="registerForm">
+    <!-- replace id="email" with id="register-email" and id="password" with id="register-password" -->
+    <label for="register-email">Email:</label>
+    <input type="email" id="register-email" name="email" required>
+    <label for="register-password">Password:</label>
+    <input type="password" id="register-password" name="password" required>
+    <button type="submit">Register</button>
+  </form>
+
+  <form id="loginForm">
+    <!-- replace id="email" with id="login-email" and id="password" with id="login-password" -->
+    <label for="login-email">Email:</label>
+    <input type="email" id="login-email" name="email" required>
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <!-- Add the rest of the HTML code here -->
+  
+  <script>
+    const registerForm = document.getElementById('registerForm');
+    const loginForm = document.getElementById('loginForm');
+  
+    registerForm.addEventListener('submit', async (e) => {
+      // use the updated id
+      const registerEmail = e.target.register_email.value;
+      const registerPassword = e.target.register_password.value;
+      // rest of the code
+    });
+  
+    // the same applies for the login form
+    loginForm.addEventListener('submit', async (e) => {
+      // use the updated id
+      const loginEmail = e.target.login_email.value;
+      const loginPassword = e.target.login_password.value;
+      // rest of the code
+    });
+  </script>
+  
+  </body>
+</html>
