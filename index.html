@@ -65,34 +65,10 @@
     <button onclick="agree()">نعم، أوافق</button>
     <button onclick="disagree()">لا، لا أوافق</button>
     <hr>
-     <form id="signup-form">
-  <input type="text" name="phone" placeholder="Telefon numarası" required>
-  <input type="password" name="password" placeholder="Şifre" required>
-  <button type="submit">Kayıt Ol</button>
-</form>
-
-<script>
-  const form = document.getElementById('signup-form');
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const phone = form.phone.value;
-    const password = form.password.value;
-
-    fetch("https://script.google.com/macros/s/AKfycbw7xDQY1OVhDtgpvOvXfrIIyCJp0xhHCXo6ih-HHlljWpOVVi8RZMPG-DK8idUVry94rg/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(password)}`
-    });
-
-    alert("Kaydınız gönderildi!");
-    form.reset();
-  });
-</script>
+     <h4>سجل معنا (اختياري)</h4>
+    <input type="text" id="phone" placeholder="رقم الهاتف"><br><br>
+    <input type="password" id="password" placeholder="كلمة السر"><br><br>
+    <button onclick="register()">تسجيل</button>
 
 </div>
 
