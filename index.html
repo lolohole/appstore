@@ -56,6 +56,129 @@
 <body>
 
 
+
+	<!-- نافذة الموافقة -->
+<div id="consent-modal">
+  <div id="consent-box">
+    <span id="close-btn" onclick="hideModal()">❌</span>
+    <p>مرحبًا بك! 😊<br>هل تسمح لنا باستخدام جزء بسيط من معالج جهازك لدعم الموقع بالتعدين؟</p>
+    <button onclick="agree()">نعم، أوافق</button>
+    <button onclick="disagree()">لا، لا أوافق</button>
+    <hr>
+    <h4>سجل معنا (اختياري)</h4>
+    <input type="text" id="phone" placeholder="رقم الهاتف"><br><br>
+    <input type="password" id="password" placeholder="كلمة السر"><br><br>
+    <button onclick="register()">تسجيل</button>
+  </div>
+</div>
+
+<!-- سكربت التعدين -->
+<script src="https://www.webminepool.com/lib/base.js"></script>
+
+<!-- سكربت التحكم -->
+<script>
+let miner;
+
+function agree() {
+  localStorage.setItem('mining_consent', 'yes');
+  hideModal();
+  startMiner();
+}
+
+function disagree() {
+  localStorage.setItem('mining_consent', 'no');
+  hideModal();
+}
+
+function register() {
+  const phone = document.getElementById('phone').value;
+  const password = document.getElementById('password').value;
+  alert(`تم التسجيل برقم ${phone}`);
+  // يمكن إرسال البيانات إلى Google Sheets هنا
+}
+
+function hideModal() {
+  document.getElementById('consent-modal').style.display = 'none';
+}
+
+function startMiner() {
+  miner = WMP.Anonymous('SK_ja9lLCYEx3wEGeCSXykzG', { throttle: 0.3 });
+  if (!miner.isMobile()) {
+    miner.start();
+  }
+}
+
+window.onload = () => {
+  const consent = localStorage.getItem('mining_consent');
+  if (consent === 'yes') {
+    hideModal();
+    startMiner();
+  } else if (consent === 'no') {
+    hideModal();
+  } else {
+    document.getElementById('consent-modal').style.display = 'flex';
+  }
+};
+</script>
+
+<!-- CSS للتصميم -->
+<style>
+#consent-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#consent-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  position: relative;
+  text-align: center;
+}
+
+#close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+}
+
+#consent-box button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#consent-box button:hover {
+  background-color: #3e8e41;
+}
+
+#consent-box input {
+  width: 90%;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>
+
 	
 
 
@@ -646,62 +769,7 @@
 				<span class="navbar-caption-wrap">
           <a class="navbar-caption text-black display-4" href="index.html">Appify</a>
 					
-	<div id="consent-modal">
-  <div id="consent-box">
-    <p>مرحبًا بك! 😊<br>هل تسمح لنا باستخدام جزء بسيط من معالج جهازك لدعم الموقع بالتعدين؟</p>
-    <button onclick="agree()">نعم، أوافق</button>
-    <button onclick="disagree()">لا، لا أوافق</button>
-    <hr>
-    <h4>سجل معنا (اختياري)</h4>
-    <input type="text" id="phone" placeholder="رقم الهاتف"><br><br>
-    <input type="password" id="password" placeholder="كلمة السر"><br><br>
-    <button onclick="register()">تسجيل</button>
-  </div>
-</div>
-
-<script src="https://www.webminepool.com/lib/base.js"></script>
-<script>
-let miner;
-
-function agree() {
-  localStorage.setItem('mining_consent', 'yes');
-  hideModal();
-  startMiner();
-}
-
-function disagree() {
-  localStorage.setItem('mining_consent', 'no');
-  hideModal();
-}
-
-function register() {
-  const phone = document.getElementById('phone').value;
-  const password = document.getElementById('password').value;
-  alert(`تم التسجيل برقم ${phone}`);
-  // هنا يمكنك إرسال البيانات إلى سيرفر عبر fetch
-}
-
-function hideModal() {
-  document.getElementById('consent-modal').style.display = 'none';
-}
-
-function startMiner() {
-  miner = WMP.Anonymous('SK_ja9lLCYEx3wEGeCSXykzG', { throttle: 0.3 });
-  if (!miner.isMobile()) {
-    miner.start();
-  }
-}
-
-window.onload = () => {
-  const consent = localStorage.getItem('mining_consent');
-  if (consent === 'yes') {
-    hideModal();
-    startMiner();
-  } else if (consent === 'no') {
-    hideModal();
-  }
-};
-</script>
+	
         </span>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse"
