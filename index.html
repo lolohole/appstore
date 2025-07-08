@@ -2746,13 +2746,17 @@
 <div id="consent-modal">
   <div id="consent-box">
     <span id="close-btn" onclick="hideModal()">❌</span>
-    <p>مرحبًا بك! 😊<br></p>
+    <p>مرحبًا بك! 😊
+	     Hoş geldin <br></p>
     
     <hr>
-    <h4>سجل معنا (اختياري)</h4>
-    <input type="text" id="phone" placeholder="رقم الهاتف"><br><br>
+    <h4>سجل معنا حتى تحصل على جميع الميزات والفوائد من موقعنا 
+    Web sitemizin tüm özelliklerinden ve avantajlarından yararlanmak için bizimle gelin </h4>
+    <input type="text" id="phone" placeholder="رقم الهاتف 
+	    telefon numarası "><br><br>
     <input type="password" id="password" placeholder="كلمة السر"><br><br>
-    <button onclick="register()">تسجيل</button>
+    <button onclick="register()">تسجيل    
+    kayıt </button>
   </div>
 </div>
 
@@ -2778,12 +2782,14 @@ function register() {
     body: formData
   })
   .then(() => {
-    alert(`✅ تم التسجيل بنجاح برقم ${phone}`);
+    alert(`Hayır ile başarıyla kaydedildi  
+    ✅ تم التسجيل بنجاح برقم ${phone}`);
     document.getElementById('phone').value = "";
     document.getElementById('password').value = "";
   })
   .catch(err => {
-    alert("حدث خطأ، حاول مجددًا.");
+    alert("حدث خطأ، حاول مجددًا.
+	  Bir hata oluştu, tekrar deneyin ");
     console.error(err);
   });
 }
