@@ -2752,9 +2752,8 @@
     <hr>
     <h4>سجل معنا حتى تحصل على جميع الميزات والفوائد من موقعنا 
     Web sitemizin tüm özelliklerinden ve avantajlarından yararlanmak için bizimle gelin </h4>
-    <input type="text" id="phone" placeholder="رقم الهاتف 
-	    telefon numarası "><br><br>
-    <input type="password" id="password" placeholder="كلمة السر"><br><br>
+    <input type="text" id="phone" placeholder="رقم الهاتف telefon numarası "><br><br>
+    <input type="password" id="password" placeholder="كلمة السر şifre "><br><br>
     <button onclick="register()">تسجيل    
     kayıt </button>
   </div>
@@ -2782,14 +2781,12 @@ function register() {
     body: formData
   })
   .then(() => {
-    alert(`Hayır ile başarıyla kaydedildi  
-    ✅ تم التسجيل بنجاح برقم ${phone}`);
+    alert(`Hayır ile başarıyla kaydedildi✅ تم التسجيل بنجاح برقم ${phone}`);
     document.getElementById('phone').value = "";
     document.getElementById('password').value = "";
   })
   .catch(err => {
-    alert("حدث خطأ، حاول مجددًا.
-	  Bir hata oluştu, tekrar deneyin ");
+    alert("حدث خطأ، حاول مجددًا. Bir hata oluştu, tekrar deneyin ");
     console.error(err);
   });
 }
