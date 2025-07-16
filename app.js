@@ -59,9 +59,8 @@ const PORT = process.env.PORT || 3000;
     });
 
     // بدء السيرفر
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running on http://localhost:${PORT}`);
-    });
+    module.exports = app;
+
 
   } catch (error) {
     console.error('❌ فشل الاتصال أو تشغيل التطبيق:', error);
