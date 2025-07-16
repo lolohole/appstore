@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const Visitor = require('./models/Visitor');
+const axios = require('axios');
 
 const profileRoute = require('./routes/profile');
 const routes = require('./routes/index');
@@ -44,6 +46,38 @@ app.use(express.static(path.join(__dirname, 'public')));
 // EJS view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(async (req, res, next) => {
+  try {
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const userAgent = req.headers['user-agent'];
+    const language = req.headers['accept-language'];
+    const referrer = req.get('Referrer') || 'Direct';
+
+    // استدعاء API لجلب البلد
+    const geoResponse = await axios.get(`https://ipapi.co/${ip}/json/`);
+    const geoData = geoResponse.data;
+
+    const visitor = new Visitor({
+      ip,
+      userAgent,
+      browser: parseBrowser(userAgent),
+      os: parseOS(userAgent),
+      device: detectDevice(userAgent),
+      language,
+      country: geoData.country_name,
+      city: geoData.city,
+      continent: geoData.continent_name,
+      referrer
+    });
+
+    await visitor.save();
+  } catch (err) {
+    console.error('Visitor Tracking Error:', err.message);
+  }
+
+  next();
+});
 
 // Routes
 app.use('/', routes);
