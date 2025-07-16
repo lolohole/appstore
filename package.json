@@ -1,21 +1,22 @@
 {
-  "name": "app-store",
-  "version": "1.0.0",
-  "description": "README: Getting started with your Mobirise AI website",
-  "main": "main.js",
-  "type": "module",
-  "scripts": {
-    "start": "nodemon main.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "express": "^4.19.2",
-    "nodemon": "^3.1.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.2"
-  }
+    "name": "my-portfolio",
+    "version": "1.0.0",
+    "description": "موقع شخصي يعرض خبراتي ومشاريعي باستخدام Express.js",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js"
+    },
+    "author": "اسمك",
+    "license": "MIT",
+    "dependencies": {
+        "ejs": "^3.1.10",
+        "express": "^4.21.2",
+        "express-session": "^1.18.1",
+        "mongoose": "^8.16.3",
+        "multer": "^2.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
 }

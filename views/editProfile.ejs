@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تعديل الملف الشخصي</title>
+</head>
+<body>
+  <h1>تعديل الملف الشخصي</h1>
+
+  <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+    <label>الوصف:</label><br>
+    <textarea name="bio" rows="4" cols="50"><%= user.bio || '' %></textarea><br><br>
+
+    <label>رابط TikTok:</label><br>
+    <input type="text" name="tiktok" value="<%= user.links?.tiktok || '' %>"><br>
+
+    <label>Instagram:</label><br>
+    <input type="text" name="instagram" value="<%= user.links?.instagram || '' %>"><br>
+
+    <label>GitHub:</label><br>
+    <input type="text" name="github" value="<%= user.links?.github || '' %>"><br>
+
+    <label>تغيير الصورة الشخصية:</label><br>
+    <input type="file" name="avatar"><br><br>
+
+    <button type="submit">حفظ التعديلات</button>
+  </form>
+</body>
+</html>

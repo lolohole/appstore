@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="UTF-8"><title><%= profileUser.name %></title></head>
+<body>
+<h1><%= profileUser.name %></h1>
+<img src="<%= profileUser.avatar %>" alt="avatar" style="width:150px;border-radius:50%;">
+<p><%= profileUser.bio %></p>
+
+<h4>روابط التواصل:</h4>
+<ul>
+  <% if (profileUser.links.tiktok) { %>
+    <li><a href="<%= profileUser.links.tiktok %>">TikTok</a></li>
+  <% } %>
+  <% if (profileUser.links.instagram) { %>
+    <li><a href="<%= profileUser.links.instagram %>">Instagram</a></li>
+  <% } %>
+  <% if (profileUser.links.github) { %>
+    <li><a href="<%= profileUser.links.github %>">GitHub</a></li>
+  <% } %>
+</ul>
+
+<% if (currentUser && currentUser.id === profileUser.id) { %>
+  <a href="/profile/edit">✏️ تعديل ملفك الشخصي</a>
+<% } %>
+</body>
+</html>

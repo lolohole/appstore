@@ -1,0 +1,14 @@
+<% if (user) { %>
+  <li class="nav-item">
+    <a class="nav-link" href="/profile">
+      <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="الصورة" style="height:32px; width:32px; border-radius:50%;">
+      <%= user.name %>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/logout">تسجيل الخروج</a>
+  </li>
+<% } else { %>
+  <li class="nav-item"><a class="nav-link" href="/login">تسجيل الدخول</a></li>
+  <li class="nav-item"><a class="nav-link" href="/register">تسجيل</a></li>
+<% } %>

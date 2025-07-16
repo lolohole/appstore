@@ -1,0 +1,12 @@
+<h1>مرحبا <%= user.name %></h1>
+<img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="الصورة" width="150">
+<p><strong>الوصف:</strong> <%= user.bio || 'لا يوجد وصف' %></p>
+
+<p>
+  <strong>روابط:</strong><br>
+  TikTok: <%= user.links?.tiktok || 'لا يوجد' %><br>
+  Instagram: <%= user.links?.instagram || 'لا يوجد' %><br>
+  GitHub: <%= user.links?.github || 'لا يوجد' %>
+</p>
+
+<a href="/profile/edit">تعديل الملف الشخصي</a>
