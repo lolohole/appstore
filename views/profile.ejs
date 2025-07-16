@@ -79,7 +79,7 @@
 <%- include('partials/header') %>
   <div class="profile-container">
     <div class="profile-header">
-      <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="Profile Picture">
+      <img src="<%= user.avatar || '/images/profile.jpg' %>" alt="Profile Picture">
       <div>
         <h1>Welcome, <%= user.name %></h1>
         <p><strong>Joined:</strong> <%= user.createdAt?.toDateString() || 'N/A' %></p>
