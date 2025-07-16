@@ -2,109 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><%= user.name %>'s Profile</title>
+  <title><%= user.fullName || user.name %>'s Profile</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .profile-container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .profile-header img {
-      border-radius: 50%;
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border: 3px solid #20c997;
-    }
-
-    .profile-header h1 {
-      margin: 0;
-      font-size: 28px;
-      color: #333;
-    }
-
-    .profile-info p {
-      margin: 10px 0;
-      font-size: 16px;
-      color: #555;
-    }
-
-    .profile-info strong {
-      color: #333;
-    }
-
-    .links a {
-      display: block;
-      color: #007bff;
-      text-decoration: none;
-      margin: 4px 0;
-    }
-
-    .edit-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-    }
-
-    .edit-button:hover {
-      background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; background: #f0f2f5; margin:0; padding:20px; }
+    .profile-container { max-width:800px; margin:auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    .profile-header { display:flex; align-items:center; gap:20px; margin-bottom:30px; }
+    .profile-header img { border-radius:50%; width:150px; height:150px; object-fit:cover; border:3px solid #20c997; }
+    .profile-header h1 { margin:0; font-size:28px; color:#333; }
+    .profile-info p { margin:10px 0; font-size:16px; color:#555; }
+    .profile-info strong { color:#333; }
+    .links a { display:block; color:#007bff; text-decoration:none; margin:4px 0; }
+    .edit-button { display:inline-block; margin-top:20px; padding:10px 20px; background-color:#007bff; color:#fff; text-decoration:none; border-radius:6px; transition:background-color .3s; }
+    .edit-button:hover { background-color:#0056b3; }
   </style>
 </head>
 <body>
-
-<%- include('partials/header') %>
+  <%- include('partials/header') %>
   <div class="profile-container">
     <div class="profile-header">
       <img src="<%= user.avatar || '/images/profile.jpg' %>" alt="Profile Picture">
       <div>
-        <h1>Welcome, <%= user.name %></h1>
-        <p><strong>Joined:</strong> <%= user.createdAt?.toDateString() || 'N/A' %></p>
+        <h1>Welcome, <%= user.fullName || user.name %></h1>
+        <p><strong>Joined:</strong> <%= user.createdAt ? user.createdAt.toDateString() : 'N/A' %></p>
       </div>
     </div>
-
     <div class="profile-info">
       <p><strong>Email:</strong> <%= user.email || 'Not provided' %></p>
       <p><strong>Location:</strong> <%= user.location || 'Not specified' %></p>
       <p><strong>Bio:</strong> <%= user.bio || 'No bio available.' %></p>
-
       <div class="links">
         <p><strong>Social Links:</strong></p>
-        <a href="<%= user.links?.tiktok %>" target="_blank">
-          TikTok: <%= user.links?.tiktok || 'Not available' %>
-        </a>
-        <a href="<%= user.links?.instagram %>" target="_blank">
-          Instagram: <%= user.links?.instagram || 'Not available' %>
-        </a>
-        <a href="<%= user.links?.github %>" target="_blank">
-          GitHub: <%= user.links?.github || 'Not available' %>
-        </a>
+        <a href="<%= user.links?.tiktok || '#' %>" target="_blank">TikTok: <%= user.links?.tiktok || 'Not available' %></a>
+        <a href="<%= user.links?.instagram || '#' %>" target="_blank">Instagram: <%= user.links?.instagram || 'Not available' %></a>
+        <a href="<%= user.links?.github || '#' %>" target="_blank">GitHub: <%= user.links?.github || 'Not available' %></a>
       </div>
     </div>
-
     <a href="/profile/edit" class="edit-button">Edit Profile</a>
   </div>
 </body>
