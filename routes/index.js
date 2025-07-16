@@ -3,33 +3,27 @@ const router = express.Router();
 const Project = require('../models/Project');
 const Message = require('../models/messageModel');
 
-// ✅ الصفحة الرئيسية
+// Home page
 router.get('/', (req, res) => {
   res.render('index', {
-    title: "مرحبًا بك في موقعي الشخصي",
-    description: "مطور ويب ومطور تطبيقات أندرويد",
+    title: "Welcome to My Personal Site",
+    description: "Web developer and Android app developer"
   });
 });
 
-// ✅ صفحة التسجيل
-router.get('/register', (req, res) => {
-  res.render('register');
-});
+// Register
+router.get('/register', (req, res) => res.render('register'));
 
-// ✅ صفحة تسجيل الدخول
-router.get('/login', (req, res) => {
-  res.render('login');
-});
+// Login
+router.get('/login', (req, res) => res.render('login'));
 
-// ✅ صفحة الملف الشخصي
+// Profile page (protected)
 router.get('/profile', (req, res) => {
-  if (!req.session.user) {
-    return res.redirect('/login');
-  }
+  if (!req.session.user) return res.redirect('/login');
   res.render('profile', { user: req.session.user });
 });
 
-// ✅ تسجيل الخروج
+// Logout
 router.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) console.error(err);
@@ -37,90 +31,54 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// ✅ صفحة عني
+// About page
 router.get('/about', (req, res) => {
   res.render('about', {
-    title: "عنّي",
-    content: "أنا مطور ويب محترف مع خبرة واسعة في تطوير واجهات أمامية وخلفية...",
+    title: "About Me",
+    content: "I’m a web developer with extensive experience in front-end and back-end development."
   });
 });
 
-router.get('/sites', (req, res) => {
-  res.render('sites', {
-    title: "عنّي",
-    content: "أنا مطور ويب محترف مع خبرة واسعة في تطوير واجهات أمامية وخلفية...",
-  });
-});
+// Sites and Apps pages (if needed)
+router.get('/sites', (req, res) => res.render('sites', { title: "My Sites", content: "Details about my sites..." }));
+router.get('/apps', (req, res) => res.render('apps', { title: "My Apps", content: "Details about my apps..." }));
 
-router.get('/apps', (req, res) => {
-  res.render('apps', {
-    title: "عنّي",
-    content: "أنا مطور ويب محترف مع خبرة واسعة في تطوير واجهات أمامية وخلفية...",
-  });
-});
-
-// ✅ صفحة المشاريع
+// Portfolio page
 router.get('/portfolio', async (req, res) => {
   try {
     const projects = await Project.find();
-    res.render('portfolio', { title: "مشاريعي", projects });
+    res.render('portfolio', { title: "My Projects", projects });
   } catch (err) {
-    res.status(500).send("خطأ في جلب المشاريع");
+    console.error(err);
+    res.status(500).send("Error fetching projects");
   }
 });
 
-// ✅ صفحة التواصل - عرض النموذج
-router.get('/contact', (req, res) => {
-  res.render('contact', { title: "اتصل بي" });
-});
+// Contact form (GET)
+router.get('/contact', (req, res) => res.render('contact', { title: "Contact Me" }));
 
-// ✅ استقبال رسالة تواصل
+// Contact form (POST)
 router.post('/contact', async (req, res) => {
   const { name, email, message } = req.body;
   try {
-    const newMessage = new Message({ name, email, message });
-    await newMessage.save();
-
-    res.send(`
-      <html><head><link rel="stylesheet" href="/styles.css"></head>
-      <body>
-        <div class="notification">Your message has been received. Thank you!</div>
-        <script>
-          setTimeout(() => {
-            document.querySelector('.notification').style.display = 'none';
-          }, 5000);
-        </script>
-      </body></html>
-    `);
+    await new Message({ name, email, message }).save();
+    res.send(`<div class="notification">Your message has been received. Thank you!</div>`);
   } catch (error) {
     console.error(error);
-    res.send(`
-      <html><head><link rel="stylesheet" href="/styles.css"></head>
-      <body>
-        <div class="notification">Failed to send message.</div>
-        <script>
-          setTimeout(() => {
-            document.querySelector('.notification').style.display = 'none';
-          }, 5000);
-        </script>
-      </body></html>
-    `);
+    res.send(`<div class="notification">Failed to send message.</div>`);
   }
 });
 
-// ✅ صفحة إضافة مشروع (اختياري)
-router.get('/add-project', (req, res) => {
-  res.render('addProject');
-});
-
+// Add project (GET & POST)
+router.get('/add-project', (req, res) => res.render('addProject'));
 router.post('/add-project', async (req, res) => {
   const { title, description, image, link } = req.body;
   try {
-    const newProject = new Project({ title, description, image, link });
-    await newProject.save();
+    await new Project({ title, description, image, link }).save();
     res.redirect('/portfolio');
   } catch (err) {
-    res.status(500).send('حدث خطأ أثناء حفظ المشروع');
+    console.error(err);
+    res.status(500).send('Error saving project');
   }
 });
 
