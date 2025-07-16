@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const Visitor = require('./models/Visitor');
 const axios = require('axios');
+const Visitor = require('./models/Visitor');
 
 const profileRoute = require('./routes/profile');
 const routes = require('./routes/index');
@@ -12,7 +12,6 @@ const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 
 const app = express();
-
 
 // MongoDB connection URL
 const mongoUrl = 'mongodb+srv://basemHalaika:V5ieA0XcG47tlo5h@clusterappstore.srfmfwr.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
@@ -48,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Middleware to track visitors
 app.use(async (req, res, next) => {
   try {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -59,20 +59,23 @@ app.use(async (req, res, next) => {
     const geoResponse = await axios.get(`https://ipapi.co/${ip}/json/`);
     const geoData = geoResponse.data;
 
-    const visitor = new Visitor({
-      ip,
-      userAgent,
-      browser: parseBrowser(userAgent),
-      os: parseOS(userAgent),
-      device: detectDevice(userAgent),
-      language,
-      country: geoData.country_name,
-      city: geoData.city,
-      continent: geoData.continent_name,
-      referrer
-    });
+    // تأكد من أن الـ geoData تحتوي على القيم قبل حفظها
+    if (geoData && geoData.country_name) {
+      const visitor = new Visitor({
+        ip,
+        userAgent,
+        browser: parseBrowser(userAgent),
+        os: parseOS(userAgent),
+        device: detectDevice(userAgent),
+        language,
+        country: geoData.country_name,
+        city: geoData.city || 'Unknown',
+        continent: geoData.continent_name || 'Unknown',
+        referrer
+      });
 
-    await visitor.save();
+      await visitor.save();
+    }
   } catch (err) {
     console.error('Visitor Tracking Error:', err.message);
   }
@@ -82,9 +85,9 @@ app.use(async (req, res, next) => {
 
 // Routes
 app.use('/', routes);
-app.use('/', registerRoute);
-app.use('/', loginRoute);
-app.use('/', profileRoute);
+app.use('/register', registerRoute);
+app.use('/login', loginRoute);
+app.use('/profile', profileRoute);
 
 // Global error handler
 app.use((err, req, res, next) => {
@@ -99,6 +102,8 @@ mongoose.connect(mongoUrl, {
 })
 .then(() => console.log('✅ MongoDB Connected'))
 .catch(err => console.error('❌ MongoDB Connection Error:', err));
+
+// Helper functions for parsing User Agent
 function parseBrowser(ua) {
   if (/chrome/i.test(ua)) return 'Chrome';
   if (/firefox/i.test(ua)) return 'Firefox';
@@ -124,5 +129,4 @@ function detectDevice(ua) {
 }
 
 // Export for Vercel
-
 module.exports = app;
