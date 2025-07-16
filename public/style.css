@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .app-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .app-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .app-card .card-img-top {
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .app-card .card-body {
+    text-align: center;
+  }
+  
+  .app-card .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .app-card .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
