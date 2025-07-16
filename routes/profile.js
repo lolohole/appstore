@@ -42,4 +42,15 @@ router.post('/profile/edit', upload.single('avatar'), async (req, res) => {
   res.redirect('/profile');
 });
 
+router.get('/profile', (req, res) => {
+  console.log('الجلسة الحالية:', req.session.user);
+
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+
+  res.render('profile', { user: req.session.user });
+});
+
+
 module.exports = router;
