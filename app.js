@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
-const MongoStore = require('connect-mongo'); // 🟢 استدعاء مكتبة التخزين في MongoDB
+const MongoStore = require('connect-mongo');
 
 const profileRoute = require('./routes/profile');
 const routes = require('./routes/index');
@@ -11,61 +11,59 @@ const loginRoute = require('./routes/login');
 
 const app = express();
 
-// 🔐 رابط الاتصال بقاعدة البيانات
-const mongoUrl = 'mongodb+srv://basemHalaika:V5ieA0XcG47tlo5h@clusterappstore.srfmfwr.mongodb.net/yourDatabaseName?retryWrites=true&w=majority&appName=clusterAppStore';
+// MongoDB connection URL
+const mongoUrl = 'mongodb+srv://basemHalaika:V5ieA0XcG47tlo5h@clusterappstore.srfmfwr.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
 
-// 🟢 إعداد الجلسات لتُحفظ داخل MongoDB
+// Session setup stored in MongoDB
 app.use(session({
-  secret: 'your_secret_key', // استبدلها بمفتاح أقوى في الإنتاج
+  secret: 'your_secret_key', // Replace with a stronger secret in production
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: mongoUrl,
-    collectionName: 'sessions',       // اسم التجميع داخل MongoDB
-    ttl: 7 * 24 * 60 * 60             // الجلسة تبقى أسبوع (بالثواني)
+    mongoUrl,
+    collectionName: 'sessions',
+    ttl: 7 * 24 * 60 * 60 // 1 week in seconds
   }),
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000,  // أسبوع (بالمللي ثانية)
+    maxAge: 7 * 24 * 60 * 60 * 1000,  // 1 week in ms
     httpOnly: true,
-    secure: false                     // 🔒 اجعلها true إذا تستخدم HTTPS (على Vercel يفضل تركها false في البداية)
+    secure: false // Set true if using HTTPS
   }
 }));
 
-// 🟢 جعل بيانات الجلسة متاحة في جميع الصفحات
+// Make session user available in views
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
 
-// 🔧 Middleware
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 🖼️ إعداد EJS
+// EJS view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// 🔗 ربط المسارات
+// Routes
 app.use('/', routes);
 app.use('/', registerRoute);
 app.use('/', loginRoute);
 app.use('/', profileRoute);
 
-// ❌ معالجة الأخطاء
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error('❌ خطأ في السيرفر:', err.stack);
-  res.status(500).send('حدث خطأ في السيرفر');
+  console.error('Server Error:', err.stack);
+  res.status(500).send('An internal server error occurred');
 });
 
-// 🟢 الاتصال بقاعدة البيانات
+// Connect to MongoDB
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => {
-  console.log('✅ MongoDB Connected');
-}).catch((err) => {
-  console.error('❌ فشل الاتصال بقاعدة البيانات:', err);
-});
+})
+.then(() => console.log('✅ MongoDB Connected'))
+.catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// ⏏️ تصدير التطبيق لـ Vercel
+// Export for Vercel
 module.exports = app;
