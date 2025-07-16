@@ -4,124 +4,39 @@
   <meta charset="UTF-8">
   <title>Edit Profile</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="date"],
-    input[type="file"],
-    textarea,
-    select {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-top: 5px;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    .profile-picture {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .profile-picture img {
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-    }
-
-    .buttons button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .save-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .cancel-btn {
-      background-color: #6c757d;
-      color: white;
-    }
-
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-      margin-top: 20px;
-    }
-
+    /* Styles translated and cleaned up */
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 30px; }
+    form { display: flex; flex-direction: column; }
+    label { margin-top: 15px; font-weight: bold; }
+    input, textarea, select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; }
+    textarea { resize: vertical; }
+    .profile-picture { text-align: center; margin-bottom: 20px; }
+    .profile-picture img { border-radius: 50%; width: 120px; height: 120px; object-fit: cover; }
+    .buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+    .buttons button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .save-btn { background-color: #007bff; color: white; }
+    .cancel-btn { background-color: #6c757d; color: white; }
+    .delete-btn { background-color: #dc3545; color: white; margin-top: 20px; }
   </style>
 </head>
 <body>
-
-<%- include('partials/header') %>
+  <%- include('partials/header') %>
   <div class="container">
     <h1>Edit Your Profile</h1>
-
-    <div class="profile-picture">
-      <img src="<%= user.avatarUrl || '/images/profile.jpg' %>" alt="Profile Picture">
-      <p>Change your profile picture:</p>
-      <input type="file" name="avatar">
-    </div>
-
     <form action="/profile/edit" method="POST" enctype="multipart/form-data">
-      <label>Full Name:</label>
-      <input type="text" name="fullName" value="<%= user.fullName || '' %>">
-
-      <label>Email:</label>
-      <input type="email" name="email" value="<%= user.email || '' %>">
-
-      <label>Phone Number:</label>
-      <input type="text" name="phone" value="<%= user.phone || '' %>">
-
-      <label>Location:</label>
-      <input type="text" name="location" value="<%= user.location || '' %>">
-
-      <label>Date of Birth:</label>
-      <input type="date" name="dob" value="<%= user.dob || '' %>">
-
+      <div class="profile-picture">
+        <img src="<%= user.avatar || '/images/profile.jpg' %>" alt="Profile Picture">
+        <p>Change your profile picture:</p>
+        <input type="file" name="avatar">
+      </div>
+      <!-- Personal info fields -->
+      <label>Full Name:</label><input type="text" name="fullName" value="<%= user.fullName || '' %>">
+      <label>Email:</label><input type="email" name="email" value="<%= user.email || '' %>">
+      <label>Phone Number:</label><input type="text" name="phone" value="<%= user.phone || '' %>">
+      <label>Location:</label><input type="text" name="location" value="<%= user.location || '' %>">
+      <label>Date of Birth:</label><input type="date" name="dob" value="<%= user.dob ? user.dob.toISOString().substring(0,10) : '' %>">
       <label>Gender:</label>
       <select name="gender">
         <option value="">Select</option>
@@ -129,26 +44,17 @@
         <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Female</option>
         <option value="other" <%= user.gender === 'other' ? 'selected' : '' %>>Other</option>
       </select>
-
-      <label>Bio:</label>
-      <textarea name="bio" rows="4"><%= user.bio || '' %></textarea>
-
-      <label>TikTok:</label>
-      <input type="text" name="tiktok" value="<%= user.links?.tiktok || '' %>">
-
-      <label>Instagram:</label>
-      <input type="text" name="instagram" value="<%= user.links?.instagram || '' %>">
-
-      <label>GitHub:</label>
-      <input type="text" name="github" value="<%= user.links?.github || '' %>">
-
+      <label>Bio:</label><textarea name="bio" rows="4"><%= user.bio || '' %></textarea>
+      <!-- Social links -->
+      <label>TikTok:</label><input type="text" name="tiktok" value="<%= user.links?.tiktok || '' %>">
+      <label>Instagram:</label><input type="text" name="instagram" value="<%= user.links?.instagram || '' %>">
+      <label>GitHub:</label><input type="text" name="github" value="<%= user.links?.github || '' %>">
       <div class="buttons">
         <button type="submit" class="save-btn">Save Changes</button>
-        <button type="button" class="cancel-btn" onclick="window.location.href='/'">Cancel</button>
+        <button type="button" class="cancel-btn" onclick="window.location.href='/profile'">Cancel</button>
       </div>
     </form>
-
-    <form action="/profile/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+    <form action="/profile/delete" method="POST" onsubmit="return confirm('Are you sure? Deleting your account cannot be undone.');">
       <button type="submit" class="delete-btn">Delete Account</button>
     </form>
   </div>
