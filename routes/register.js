@@ -17,10 +17,18 @@ router.post('/register', async (req, res) => {
     };
 
     res.redirect('/');
- } catch (error) {
+  } catch (error) {
     console.error('❌ خطأ في التسجيل:', error);
-    res.status(500).send("حدث خطأ أثناء التسجيل.");
+
+    // إظهار الخطأ على المتصفح
+    res.status(500).send(`
+      <h2 style="color:red; text-align:center;">حدث خطأ أثناء التسجيل</h2>
+      <pre style="color:#333; background:#f5f5f5; padding:15px; border-radius:10px; direction:ltr;">
+${error.stack}
+      </pre>
+    `);
   }
 });
+
 
 module.exports = router;
