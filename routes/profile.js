@@ -17,13 +17,16 @@ router.get('/profile/edit', (req, res) => {
 
 // POST edit profile
 router.post('/profile/edit', upload.single('avatar'), async (req, res) => {
-  if (!req.session.user) return res.redirect('/login');
   const { fullName, email, phone, location, dob, gender, bio, tiktok, instagram, github } = req.body;
   const updateData = {
     fullName, email, phone, location, dob, gender, bio,
     links: { tiktok, instagram, github }
   };
-  if (req.file) updateData.avatar = '/uploads/' + req.file.filename;
+
+  if (req.file) {
+    updateData.avatar = '/uploads/' + req.file.filename;
+  }
+
 
   const updatedUser = await User.findByIdAndUpdate(req.session.user._id, updateData, { new: true });
   req.session.user = updatedUser;
