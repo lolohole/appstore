@@ -17,8 +17,8 @@ router.post('/register', async (req, res) => {
     };
 
     res.redirect('/');
-  } catch (error) {
-    console.error(error);
+ } catch (error) {
+    console.error('❌ خطأ في التسجيل:', error);
     res.status(500).send("حدث خطأ أثناء التسجيل.");
   }
 });
