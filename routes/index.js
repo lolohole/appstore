@@ -45,6 +45,20 @@ router.get('/about', (req, res) => {
   });
 });
 
+router.get('/sites', (req, res) => {
+  res.render('sites', {
+    title: "عنّي",
+    content: "أنا مطور ويب محترف مع خبرة واسعة في تطوير واجهات أمامية وخلفية...",
+  });
+});
+
+router.get('/apps', (req, res) => {
+  res.render('apps', {
+    title: "عنّي",
+    content: "أنا مطور ويب محترف مع خبرة واسعة في تطوير واجهات أمامية وخلفية...",
+  });
+});
+
 // ✅ صفحة المشاريع
 router.get('/portfolio', async (req, res) => {
   try {
