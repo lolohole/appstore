@@ -1,14 +1,63 @@
-<% if (user) { %>
-  <li class="nav-item">
-    <a class="nav-link" href="/profile">
-      <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="الصورة" style="height:32px; width:32px; border-radius:50%;">
-      <%= user.name %>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/logout">تسجيل الخروج</a>
-  </li>
-<% } else { %>
-  <li class="nav-item"><a class="nav-link" href="/login">تسجيل الدخول</a></li>
-  <li class="nav-item"><a class="nav-link" href="/register">تسجيل</a></li>
-<% } %>
+<!-- Navbar Header -->
+<style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #007bff;
+    padding: 10px 20px;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+
+  .nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <% if (user) { %>
+      <a href="/profile">Profile</a>
+    <% } %>
+  </div>
+
+  <div class="nav-right">
+    <% if (user) { %>
+      <a class="nav-link" href="/profile">
+        <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="Avatar" class="user-avatar">
+        <%= user.name %>
+      </a>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </div>
+</nav>
