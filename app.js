@@ -14,7 +14,7 @@ const loginRoute = require('./routes/login');
 const app = express();
 
 // استخدام متغيرات البيئة
-const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://username:password@cluster.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
+const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://basemHalaika:V5ieA0XcG47tlo5h@cluster.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
 
 // إعداد الجلسة وتخزينها في MongoDB
 app.use(session({
