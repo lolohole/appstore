@@ -13,41 +13,41 @@ const loginRoute = require('./routes/login');
 
 const app = express();
 
-// MongoDB connection URL
-const mongoUrl = 'mongodb+srv://basemHalaika:V5ieA0XcG47tlo5h@clusterappstore.srfmfwr.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
+// استخدام متغيرات البيئة
+const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://username:password@cluster.mongodb.net/yourDatabaseName?retryWrites=true&w=majority';
 
-// Session setup stored in MongoDB
+// إعداد الجلسة وتخزينها في MongoDB
 app.use(session({
-  secret: 'your_secret_key', // Replace with a stronger secret in production
+  secret: process.env.SESSION_SECRET || 'your_secret_key',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl,
     collectionName: 'sessions',
-    ttl: 7 * 24 * 60 * 60 // 1 week in seconds
+    ttl: 7 * 24 * 60 * 60 // أسبوع
   }),
   cookie: {
-    maxAge: 7 * 24 * 60 * 60 * 1000,  // 1 week in ms
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: false // Set true if using HTTPS
+    secure: false // true إذا تستخدم HTTPS
   }
 }));
 
-// Make session user available in views
+// تمرير بيانات الجلسة للـ views
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
 
-// Middleware
+// إعداد الميدلوير
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// EJS view engine
+// إعداد المحرك EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Middleware to track visitors
+// ميدلوير لتتبع الزوار
 app.use(async (req, res, next) => {
   try {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -55,11 +55,9 @@ app.use(async (req, res, next) => {
     const language = req.headers['accept-language'];
     const referrer = req.get('Referrer') || 'Direct';
 
-    // استدعاء API لجلب البلد
     const geoResponse = await axios.get(`https://ipapi.co/${ip}/json/`);
     const geoData = geoResponse.data;
 
-    // تأكد من أن الـ geoData تحتوي على القيم قبل حفظها
     if (geoData && geoData.country_name) {
       const visitor = new Visitor({
         ip,
@@ -83,27 +81,27 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Routes
+// تعريف المسارات
 app.use('/', routes);
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 
-// Global error handler
+// معالج أخطاء عام
 app.use((err, req, res, next) => {
   console.error('Server Error:', err.stack);
-  res.status(500).send('An internal server error occurred');
+  res.status(500).send('حدث خطأ في الخادم');
 });
 
-// Connect to MongoDB
+// الاتصال بقاعدة MongoDB
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ MongoDB Connected'))
-.catch(err => console.error('❌ MongoDB Connection Error:', err));
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// Helper functions for parsing User Agent
+// دوال مساعدة لتحليل الـ User Agent
 function parseBrowser(ua) {
   if (/chrome/i.test(ua)) return 'Chrome';
   if (/firefox/i.test(ua)) return 'Firefox';
@@ -128,5 +126,9 @@ function detectDevice(ua) {
   return 'Desktop';
 }
 
-// Export for Vercel
-module.exports = app;
+// ✅ تشغيل السيرفر
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+});
