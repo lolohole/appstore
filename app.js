@@ -101,30 +101,7 @@ mongoose.connect(mongoUrl, {
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// دوال مساعدة لتحليل الـ User Agent
-function parseBrowser(ua) {
-  if (/chrome/i.test(ua)) return 'Chrome';
-  if (/firefox/i.test(ua)) return 'Firefox';
-  if (/safari/i.test(ua) && !/chrome/i.test(ua)) return 'Safari';
-  if (/edge/i.test(ua)) return 'Edge';
-  if (/msie/i.test(ua) || /trident/i.test(ua)) return 'IE';
-  return 'Other';
-}
 
-function parseOS(ua) {
-  if (/windows/i.test(ua)) return 'Windows';
-  if (/mac os/i.test(ua)) return 'MacOS';
-  if (/android/i.test(ua)) return 'Android';
-  if (/linux/i.test(ua)) return 'Linux';
-  if (/iphone/i.test(ua)) return 'iOS';
-  return 'Other';
-}
-
-function detectDevice(ua) {
-  if (/mobile/i.test(ua)) return 'Mobile';
-  if (/tablet/i.test(ua)) return 'Tablet';
-  return 'Desktop';
-}
 
 // ✅ تشغيل السيرفر
 const PORT = process.env.PORT || 3000;
