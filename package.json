@@ -2,10 +2,10 @@
     "name": "my-portfolio",
     "version": "1.0.0",
     "description": "موقع شخصي يعرض خبراتي ومشاريعي باستخدام Express.js",
-    "main": "app.js",
+    "main": "server.js",
     "scripts": {
-        "start": "node app.js",
-        "dev": "nodemon app.js"
+        "start": "node server.js",
+        "dev": "nodemon server.js"
     },
     "author": "اسمك",
     "license": "MIT",
