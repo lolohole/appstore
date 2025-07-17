@@ -8,26 +8,29 @@ router.get('/login', (req, res) => {
 });
 
 // تسجيل الدخول - POST
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   const { email } = req.body;
 
   try {
-    // 🔍 البحث عن المستخدم
     const foundUser = await User.findOne({ email });
 
     if (!foundUser) {
       return res.send('البريد الإلكتروني غير مسجل.');
     }
 
-    // حفظ المستخدم في الجلسة
     req.session.user = foundUser;
-
-    // إعادة التوجيه إلى الصفحة الرئيسية
     res.redirect('/');
   } catch (error) {
-    console.error(error);
-    res.status(500).send('حدث خطأ أثناء تسجيل الدخول.');
+    console.error("❌ خطأ في تسجيل الدخول:", error);
+
+    // ✅ عرض الخطأ على المتصفح أثناء التطوير
+    if (process.env.NODE_ENV === 'development') {
+      res.status(500).send(`<pre style="color: red;">${error.stack}</pre>`);
+    } else {
+      res.status(500).send('حدث خطأ أثناء تسجيل الدخول.');
+    }
   }
 });
+
 
 module.exports = router;
