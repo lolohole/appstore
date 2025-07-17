@@ -1,19 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // تأكد أن المسار صحيح
+const User = require('../models/User');
 
-// صفحة تسجيل الدخول - GET
 router.get('/', (req, res) => {
   res.render('login');
 });
 
-// تسجيل الدخول - POST
 router.post('/', async (req, res) => {
+  console.log("Login POST body:", req.body);
   const { email } = req.body;
 
   try {
     const foundUser = await User.findOne({ email });
-
     if (!foundUser) {
       return res.send('البريد الإلكتروني غير مسجل.');
     }
@@ -21,7 +19,7 @@ router.post('/', async (req, res) => {
     req.session.user = foundUser;
     res.redirect('/');
   } catch (error) {
-    console.error(error);
+    console.error("Login Error:", error);
     res.status(500).send('حدث خطأ أثناء تسجيل الدخول.');
   }
 });
